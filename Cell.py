@@ -1,14 +1,17 @@
 import disease
 import random
-import math
-import time
 from covid import PADDING, WIN_WIDTH, WIN_HEIGHT, Active_cells, RECOVERY_TIME, SPEED
-from math import *
+
 import pygame
 from pygame import *
+
 import random
+
 import math
+from math import *
+
 import time
+from time import *
 
 UP_LEFT = 1
 UP = 2

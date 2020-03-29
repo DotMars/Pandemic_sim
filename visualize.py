@@ -1,53 +1,41 @@
 import matplotlib.pyplot as plt
 from matplotlib.collections import EventCollection
 import numpy as np
+import csv
 
-# Fixing random state for reproducibility
-np.random.seed(19680801)
+with open('data.csv', newline='') as f:
+    reader = csv.reader(f)
+    data = list(reader)
 
 
-# create random data
-xdata = np.random.random([2, 10])
-
-# split the data into two parts
-xdata1 = xdata[0, :]
-xdata2 = xdata[1, :]
-
-# sort the data so it makes clean curves
-xdata1.sort()
-xdata2.sort()
-
-# create some y data points
-ydata1 = xdata1 ** 2
-ydata2 = 1 - xdata2 ** 3
+infected_data = []
+susceptible_data = []
+remove_data = []
+time_data = []
+i = 0
+for entry in data:
+    infected_data.append(entry[0])
+    susceptible_data.append(entry[1])
+    remove_data.append(entry[2])
+    time_data.append(i)
+    i += 1
+    
 
 # plot the data
 fig = plt.figure()
-ax = fig.add_subplot(1, 1, 1)
-ax.plot(xdata1, ydata1, color='tab:blue')
-ax.plot(xdata2, ydata2, color='tab:orange')
+ax1 = fig.add_subplot(111)
+# ax2 = fig.add_subplot(132)
+# ax3 = fig.add_subplot(133)
 
-# create the events marking the x data points
-xevents1 = EventCollection(xdata1, color='tab:blue', linelength=0.05)
-xevents2 = EventCollection(xdata2, color='tab:orange', linelength=0.05)
+ax1.set_title('Infected')
+# ax2.set_title('Susceptible')
+# ax3.set_title('Removed')
 
-# create the events marking the y data points
-yevents1 = EventCollection(ydata1, color='tab:blue', linelength=0.05,
-                           orientation='vertical')
-yevents2 = EventCollection(ydata2, color='tab:orange', linelength=0.05,
-                           orientation='vertical')
+ax1.plot(time_data, infected_data, color='tab:red')
+ax1.plot(time_data, susceptible_data, color='tab:blue')
+ax1.plot(time_data, remove_data, color='tab:grey')
 
-# add the events to the axis
-ax.add_collection(xevents1)
-ax.add_collection(xevents2)
-ax.add_collection(yevents1)
-ax.add_collection(yevents2)
 
-# set the limits
-ax.set_xlim([0, 1])
-ax.set_ylim([0, 1])
-
-ax.set_title('line plot with data points')
 
 # display the plot
 plt.show()

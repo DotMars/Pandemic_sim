@@ -4,8 +4,7 @@ Author : THe tamaaaaaaaaaa
 
 import pygame
 from pygame import *
-from math import *
-import numpy as np
+
 import pandas as pd
 import numpy as np
 
@@ -13,6 +12,11 @@ import random
 import Cell
 import disease
 
+import math
+from math import *
+
+import time
+from time import *
 
 # SCREEN PARAMETERS
 WIN_WIDTH = 500
@@ -24,6 +28,9 @@ FLAGS = 0
 
 PADDING = 20
 SPEED = 1
+
+#START TIME
+START_TIME = time.time()
 
 
 # SIMULATION PARAMETERS
@@ -62,7 +69,8 @@ def export_to_csv():
     exit()
 
 def statistics():
-    SIMULATION_HISTORY.append([INFECTED_COUNT, NORMAL_COUNT, REMOVED_COUNT])
+    SIMULATION_HISTORY.append([INFECTED_COUNT, NORMAL_COUNT, REMOVED_COUNT,
+                                        time.time() - START_TIME])
     ERADICATED = True
     for cell in Active_cells:
         if cell.get_state() == "I":
