@@ -11,7 +11,6 @@ import math
 from math import *
 
 import time
-from time import *
 
 UP_LEFT = 1
 UP = 2
