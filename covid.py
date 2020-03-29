@@ -33,7 +33,7 @@ Active_cells = []  # An array to store {n = POPULATION} number of Cell objects
 covid_29 = disease.Disease(arg_name = "COVID-29")
 
 
-# PYGAME COLORS
+# PYGAME COLORSS
 CELL_COLOR = pygame.Color(15, 82, 186)
 BLACK = pygame.Color(0, 0, 0)
 RED = pygame.Color(255, 0, 0)
