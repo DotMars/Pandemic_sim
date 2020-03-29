@@ -24,7 +24,7 @@ PADDING = 20
 
 # SIMULATION PARAMETERS
 POPULATION = 200
-RECOVERY_TIME = 5
+RECOVERY_TIME = 4
 CELL_RADIUS = 5
 
 Active_cells = []  # An array to store {n = POPULATION} number of Cell objects
@@ -40,7 +40,7 @@ GREY = pygame.Color(128, 128, 128)
 WHITE = pygame.Color(255, 255, 255)
 
 
-def represente_cells(screen):
+def draw_cells(screen):
     global Active_cells
     for cell in Active_cells:
         if cell.state == "S":
@@ -49,7 +49,6 @@ def represente_cells(screen):
             pygame.draw.circle(screen, RED, cell.position, CELL_RADIUS)
         elif cell.state == "R":
             pygame.draw.circle(screen, GREY, cell.position, CELL_RADIUS)
-
 
 
 check_count = 0
@@ -110,7 +109,7 @@ def spread():
 
 def initialize_world(screen):
     initialize_cells()
-    represente_cells(screen)
+    draw_cells(screen)
 
 
 def main():
@@ -142,7 +141,7 @@ def main():
         
         spread()
 
-        represente_cells(screen)
+        draw_cells(screen)
 
         pygame.display.update()
 

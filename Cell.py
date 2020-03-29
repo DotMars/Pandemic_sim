@@ -54,14 +54,18 @@ class Cell(object):
     def is_infected(self):
         if self.state == "I":
             return True
-        else :return False
+        else :
+            return False
     
     def infected_with(self, disease):
 
         if disease and self.state == "S":
-            self.disease = disease
-            self.state = "I"
-            self.infection_time = time.time()
+            random_choice = random.choice([0, 0, 0, 0, 0, 0, 0, 0, 0, 1])
+            if random_choice:
+                print(random_choice)
+                self.disease = disease
+                self.state = "I"
+                self.infection_time = time.time()
             
         
     def distance(self, other_cell = []):
