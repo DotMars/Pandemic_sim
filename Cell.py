@@ -1,9 +1,10 @@
 import disease
-import random, math
-from covid import PADDING, WIN_WIDTH, WIN_HEIGHT
-from math import sqrt
+import random, math, time
+from covid import PADDING, WIN_WIDTH, WIN_HEIGHT, Active_cells, RECOVERY_TIME
+from math import *
 import pygame
 from pygame import *
+import random, math, time
 
 UP_LEFT = 1
 UP = 2
@@ -35,6 +36,7 @@ class Cell(object):
         self.speed = 1
 
         self.disease = disease
+        self.infection_time = time.time()
 
     def set_position(self, x, y):
         self.position = (x, y)
@@ -55,19 +57,30 @@ class Cell(object):
         else :return False
     
     def infected_with(self, disease):
-        if disease:
-            if random.choice([0, 1, 1, 1, 1, 1, 1, 1]):
-                self.disease = disease
-                self.state = "I"
 
-    
+        if disease and self.state == "S":
+            self.disease = disease
+            self.state = "I"
+            self.infection_time = time.time()
+            
+        
     def distance(self, other_cell = []):
         position = list(self.position)
         x = other_cell.get_position()[0]
         y = other_cell.get_position()[1]
-        return sqrt((x - position[0])*(x - position[0]) + (y - position[1])*(y - position[1]))
+        distance_x = sqrt((x - position[0])*(x - position[0]))
+        distance_y = sqrt((y - position[1])*(y - position[1]))
+        distance = (distance_x, distance_y)
+        return distance
+    
     
     def update_random_destination(self):
+
+        # Check if it's time to recover
+        if time.time() - self.infection_time >= RECOVERY_TIME and self.state == "I":
+            self.set_state("R")
+
+        # Update location
         position = list(self.position)
         x = position[0]
         y = position[1]
@@ -78,9 +91,9 @@ class Cell(object):
         distance = sqrt( (x - z)*(x - z) + (y - a)*(y- a) )
 
         if distance <= 5:
-            print("Destination reached : ", self.destination, end = " ")
+            # print("Destination reached : ", self.destination, end = " ")
             self.destination = self.pick_random_position()
-            print("New dest assigned : ", self.destination)
+            # print("New dest assigned : ", self.destination)
 
         else:
             if x - z > 0 :

@@ -23,10 +23,13 @@ FLAGS = 0
 PADDING = 20
 
 # SIMULATION PARAMETERS
-POPULATION = 100
+POPULATION = 200
+RECOVERY_TIME = 5
 CELL_RADIUS = 5
 
 Active_cells = []  # An array to store {n = POPULATION} number of Cell objects
+
+covid_29 = disease.Disease(arg_name = "COVID-29")
 
 
 # PYGAME COLORS
@@ -44,6 +47,9 @@ def represente_cells(screen):
             pygame.draw.circle(screen, CELL_COLOR, cell.position, CELL_RADIUS)
         elif cell.state == "I":
             pygame.draw.circle(screen, RED, cell.position, CELL_RADIUS)
+        elif cell.state == "R":
+            pygame.draw.circle(screen, GREY, cell.position, CELL_RADIUS)
+
 
 
 check_count = 0
@@ -85,19 +91,21 @@ def initialize_cells():
             Cell.Cell(id = i))
     
     Active_cells[0].set_state("I")
+    Active_cells[0].infected_with(covid_29)
 
 def spread():
-    # for current_cell in Active_cells:
-    #     for other_cell in Active_cells:
-    #         if current_cell != other_cell:
-    #             distance = current_cell.distance(other_cell)
-    #             if distance <= current_cell.disease.get_radius():
-    #                 print("Infected distance : ", distance)
-    #                 print("Infected position : ", current_cell.get_position(), end = " ")
-    #                 print("Other cell position : ", other_cell.get_position())
-    #                 other_cell.infected_with(current_cell.disease)
-    pass
-  
+    for cell in Active_cells:
+        if cell.is_infected():
+            for other_cell in Active_cells:
+                # if cell != other_cell:
+                    distance = cell.distance(other_cell)
+                    if distance[0] <= cell.disease.get_radius() and distance[1] <= cell.disease.get_radius():
+                        if distance[0] > 5 or distance[1] > 5:
+                            # print("Infected distance : ", distance[0], " ", distance[1])
+                            # print("Infected position : ", cell.get_position(), end = " ")
+                            # print("Other cell position : ", other_cell.get_position())
+                            other_cell.infected_with(cell.disease)
+
 
 
 def initialize_world(screen):
@@ -107,7 +115,6 @@ def initialize_world(screen):
 
 def main():
 
-    covid_29 = disease.Disease(arg_name = "COVID-29")
     pygame.init()
     screen = pygame.display.set_mode(DISPLAY, FLAGS, DEPTH)
     pygame.display.set_caption(
@@ -130,6 +137,8 @@ def main():
         for cell in Active_cells:
             # cell.set_trajectory(random.randint(1, 9))
             cell.update_random_destination()
+
+
         
         spread()
 
