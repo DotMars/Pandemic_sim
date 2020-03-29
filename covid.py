@@ -6,6 +6,8 @@ import pygame
 from pygame import *
 from math import *
 import numpy as np
+import pandas as pd
+import numpy as np
 
 import random
 import Cell
@@ -23,10 +25,20 @@ FLAGS = 0
 PADDING = 20
 SPEED = 1
 
+
 # SIMULATION PARAMETERS
 POPULATION = 100
 RECOVERY_TIME = 7
 CELL_RADIUS = 5
+
+ERADICATED = False
+
+# STATS
+INFECTED_COUNT = 1
+NORMAL_COUNT = POPULATION - 1
+REMOVED_COUNT = 0
+
+SIMULATION_HISTORY = []
 
 Active_cells = []  # An array to store {n = POPULATION} number of Cell objects
 
@@ -39,6 +51,24 @@ BLACK = pygame.Color(0, 0, 0)
 RED = pygame.Color(255, 0, 0)
 GREY = pygame.Color(128, 128, 128)
 WHITE = pygame.Color(255, 255, 255)
+
+
+def export_to_csv():
+    data = pd.DataFrame(SIMULATION_HISTORY)
+    # create a csv file
+    data.to_csv("data.csv", index=False, header=False)
+    print("Simulation data exported !")
+    input()
+    exit()
+
+def statistics():
+    SIMULATION_HISTORY.append([INFECTED_COUNT, NORMAL_COUNT, REMOVED_COUNT])
+    ERADICATED = True
+    for cell in Active_cells:
+        if cell.get_state() == "I":
+            ERADICATED = False
+    if ERADICATED:
+        export_to_csv()
 
 
 def draw_cells(screen):
@@ -113,6 +143,7 @@ def initialize_world(screen):
 
 
 def main():
+    global INFECTED_COUNT, NORMAL_COUNT, REMOVED_COUNT
 
     pygame.init()
     screen = pygame.display.set_mode(DISPLAY, FLAGS, DEPTH)
@@ -132,13 +163,25 @@ def main():
                 raise SystemExit("Escape button by user!")
 
         screen.fill((255, 255, 255))
-
+        NORMAL_COUNT = 0
+        REMOVED_COUNT = 0
+        INFECTED_COUNT = 0
         for cell in Active_cells:
             # cell.set_trajectory(random.randint(1, 9))
             # cell.update_random_destination()
             cell.update_central_dest_random_dest()
-        spread()
+            if cell.get_state() == "I":
+                INFECTED_COUNT += 1                
+            elif cell.get_state() == "R":
+                REMOVED_COUNT += 1
+            elif cell.get_state() == "S":
+                NORMAL_COUNT += 1
+                
+        print(INFECTED_COUNT, NORMAL_COUNT, REMOVED_COUNT)
+        
 
+        spread()
+        statistics()
         draw_cells(screen)
 
         pygame.display.update()
