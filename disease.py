@@ -1,6 +1,6 @@
-
+# from covid import INFECTION_RATE
 class Disease(object):
-    def __init__(self, arg_name = "UKNOWN DISEASE", infection_rate = .1, infection_radius = 10):
+    def __init__(self, arg_name = "UKNOWN DISEASE", infection_rate = .1, infection_radius = 15):
         super().__init__()
         self.name = arg_name
         self.infection_rate = infection_rate

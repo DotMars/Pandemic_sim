@@ -1,6 +1,6 @@
 import disease
 import random, math, time
-from covid import PADDING, WIN_WIDTH, WIN_HEIGHT, Active_cells, RECOVERY_TIME
+from covid import PADDING, WIN_WIDTH, WIN_HEIGHT, Active_cells, RECOVERY_TIME, SPEED
 from math import *
 import pygame
 from pygame import *
@@ -33,7 +33,7 @@ class Cell(object):
         
         self.x_vel = 0
         self.y_vel = 0
-        self.speed = 1
+        self.speed = SPEED
 
         self.disease = disease
         self.infection_time = time.time()
@@ -77,7 +77,44 @@ class Cell(object):
         distance = (distance_x, distance_y)
         return distance
     
-    
+    def update_central_dest_random_dest(self):
+        # Simulating disease spread in a population going to a central location
+
+        # Check if it's time to recover
+        if time.time() - self.infection_time >= RECOVERY_TIME and self.state == "I":
+            self.set_state("R")
+
+        # Update location
+        position = list(self.position)
+        x = position[0]
+        y = position[1]
+        destination = list(self.destination)
+        z = destination[0]
+        a = destination[1]
+
+        distance = sqrt( (x - z)*(x - z) + (y - a)*(y- a) )
+
+        if distance <= 5:
+            # print("Destination reached : ", self.destination, end = " ")
+            if random.choice([0, 0, 0, 1]):
+                self.destination = (WIN_WIDTH / 2, WIN_HEIGHT/2)
+            else :
+                self.destination = self.pick_random_position()
+            # print("New dest assigned : ", self.destination)
+
+        else:
+            if x - z > 0 :
+                x -= self.speed
+            elif x - z < 0 :
+                x += self.speed
+            if y - a > 0 :
+                y -= self.speed
+            elif y - a < 0:
+                y += self.speed
+
+            self.position = (x, y)
+            self.within_border
+
     def update_random_destination(self):
 
         # Check if it's time to recover

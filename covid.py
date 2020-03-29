@@ -14,17 +14,18 @@ import disease
 
 # SCREEN PARAMETERS
 WIN_WIDTH = 500
-WIN_HEIGHT = 500
+WIN_HEIGHT = 340
 
 DISPLAY = (WIN_WIDTH, WIN_HEIGHT)
 DEPTH = 32
 FLAGS = 0
 
 PADDING = 20
+SPEED = 1
 
 # SIMULATION PARAMETERS
-POPULATION = 200
-RECOVERY_TIME = 4
+POPULATION = 100
+RECOVERY_TIME = 7
 CELL_RADIUS = 5
 
 Active_cells = []  # An array to store {n = POPULATION} number of Cell objects
@@ -135,7 +136,8 @@ def main():
 
         for cell in Active_cells:
             # cell.set_trajectory(random.randint(1, 9))
-            cell.update_random_destination()
+            # cell.update_random_destination()
+            cell.update_central_dest_random_dest()
 
 
         
