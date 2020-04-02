@@ -61,10 +61,11 @@ WHITE = pygame.Color(255, 255, 255)
 
 def export_to_csv():
     data = pd.DataFrame(SIMULATION_HISTORY)
+    print(data)
     # create a csv file
     data.to_csv("data.csv", index=False, header=False)
     print("Simulation data exported !")
-    input()
+ 
     exit()
 
 def statistics():
@@ -184,7 +185,7 @@ def main():
             elif cell.get_state() == "S":
                 NORMAL_COUNT += 1
                 
-        print(INFECTED_COUNT, NORMAL_COUNT, REMOVED_COUNT, time.time() - START_TIME)
+        # print(INFECTED_COUNT, NORMAL_COUNT, REMOVED_COUNT, time.time() - START_TIME)
         
 
         spread()
