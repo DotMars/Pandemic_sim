@@ -1,6 +1,8 @@
 """
 Author : THe tamaaaaaaaaaa
 """
+import os
+os.environ["SDL_VIDEODRIVER"] = "dummy"
 
 import pygame
 from pygame import *
