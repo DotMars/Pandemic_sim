@@ -1,6 +1,8 @@
 """
 Author : THe tamaaaaaaaaaa
 """
+import os
+# os.environ["SDL_VIDEODRIVER"] = "dummy"
 
 import pygame
 from pygame import *
@@ -28,7 +30,7 @@ FLAGS = 0
 PADDING = 20
 SPEED = 1
 
-#START TIME
+# START TIME
 START_TIME = time.time()
 
 
@@ -68,9 +70,10 @@ def export_to_csv():
 
     exit()
 
+
 def statistics():
     SIMULATION_HISTORY.append([INFECTED_COUNT, NORMAL_COUNT, REMOVED_COUNT,
-                       (time.time() - START_TIME)])
+                               (time.time() - START_TIME)])
     ERADICATED = True
     for cell in Active_cells:
         if cell.get_state() == "I":
@@ -186,7 +189,6 @@ def main():
                 NORMAL_COUNT += 1
 
         # print(INFECTED_COUNT, NORMAL_COUNT, REMOVED_COUNT, time.time() - START_TIME)
-
 
         spread()
         statistics()

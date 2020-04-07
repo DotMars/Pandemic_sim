@@ -23,6 +23,14 @@ DOWN_RIGHT = 9
 
 
 class Cell(object):
+    """[Cell class represents an individual in the real world]
+
+    Arguments:
+        object
+
+    Returns:
+        [Cell object] -- [An abstraction of an individual in a society]
+    """
     def __init__(self, starting_pos_x=0, starting_pos_y=0, id=-1, disease=disease.Disease()):
         super().__init__()
 
@@ -125,7 +133,6 @@ class Cell(object):
             self.within_border
 
     def update_random_destination(self):
-
         # Check if it's time to recover
         if time.time() - self.infection_time >= RECOVERY_TIME and self.state == "I":
             self.set_state("R")
