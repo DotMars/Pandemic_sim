@@ -65,11 +65,11 @@ def export_to_csv():
     # create a csv file
     data.to_csv("data.csv", index=False, header=False)
     print("Simulation data exported !")
- 
+
     exit()
 
 def statistics():
-    SIMULATION_HISTORY.append([INFECTED_COUNT, NORMAL_COUNT, REMOVED_COUNT, 
+    SIMULATION_HISTORY.append([INFECTED_COUNT, NORMAL_COUNT, REMOVED_COUNT,
                        (time.time() - START_TIME)])
     ERADICATED = True
     for cell in Active_cells:
@@ -179,14 +179,14 @@ def main():
             # cell.update_random_destination()
             cell.update_central_dest_random_dest()
             if cell.get_state() == "I":
-                INFECTED_COUNT += 1                
+                INFECTED_COUNT += 1
             elif cell.get_state() == "R":
                 REMOVED_COUNT += 1
             elif cell.get_state() == "S":
                 NORMAL_COUNT += 1
-                
+
         # print(INFECTED_COUNT, NORMAL_COUNT, REMOVED_COUNT, time.time() - START_TIME)
-        
+
 
         spread()
         statistics()
