@@ -10,7 +10,11 @@
 
 ### How ?
 
-  - Python3.7 and Pygame 1.9.6
+  - git clone https://github.com/DotMars/Pandemic_sim.git
+  - cd to the directory and run : pip freeze > requirements.txt
+  - pip install -r requirements.txt
+  - Run the simulation using : python covid.py
+  - Visualize results saved in data.csv using : python visualize.py
   
 ### What's next ?
  
