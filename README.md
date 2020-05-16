@@ -3,6 +3,7 @@
 ### What ?
   
   - Just like it's name indicates, this program illustrates the spread of a pandemic in a society over-time.
+  ![alt text](pandemic_sim_capture.PNG)
 
 ### Why ?
   
